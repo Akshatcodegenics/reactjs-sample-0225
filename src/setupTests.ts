@@ -4,19 +4,19 @@ import '@testing-library/jest-dom';
 // Mock ResizeObserver
 Object.defineProperty(window, 'ResizeObserver', {
   writable: true,
-  value: jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  })),
+  value: class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
 });
 
 // Mock IntersectionObserver
 Object.defineProperty(window, 'IntersectionObserver', {
   writable: true,
-  value: jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    unobserve: jest.fn(),
-    disconnect: jest.fn(),
-  })),
+  value: class IntersectionObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
 });

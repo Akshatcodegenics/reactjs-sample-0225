@@ -3,16 +3,16 @@ import { renderHook, act } from '@testing-library/react';
 import { useWeb3 } from '../useWeb3';
 
 // Mock ethers
-jest.mock('ethers', () => ({
-  BrowserProvider: jest.fn(() => ({
-    getBalance: jest.fn(() => Promise.resolve(BigInt('1000000000000000000'))), // 1 ETH
+vi.mock('ethers', () => ({
+  BrowserProvider: vi.fn(() => ({
+    getBalance: vi.fn(() => Promise.resolve(BigInt('1000000000000000000'))), // 1 ETH
   })),
-  formatEther: jest.fn(() => '1.0'),
+  formatEther: vi.fn(() => '1.0'),
 }));
 
 // Mock toast
-const mockToast = jest.fn();
-jest.mock('@/hooks/use-toast', () => ({
+const mockToast = vi.fn();
+vi.mock('@/hooks/use-toast', () => ({
   toast: mockToast,
 }));
 
@@ -22,7 +22,7 @@ describe('useWeb3', () => {
     Object.defineProperty(window, 'ethereum', {
       writable: true,
       value: {
-        request: jest.fn(),
+        request: vi.fn(),
       },
     });
     mockToast.mockClear();
@@ -38,7 +38,7 @@ describe('useWeb3', () => {
 
   test('connects wallet successfully', async () => {
     const mockAccounts = ['0x1234567890abcdef1234567890abcdef12345678'];
-    const mockRequest = window.ethereum!.request as jest.Mock;
+    const mockRequest = window.ethereum!.request as any;
     mockRequest.mockResolvedValue(mockAccounts);
     
     const { result } = renderHook(() => useWeb3());

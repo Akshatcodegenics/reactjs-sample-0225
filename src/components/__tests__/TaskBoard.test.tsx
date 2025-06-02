@@ -7,8 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import Board from '@/pages/Board';
 
 // Mock the toast hook
-const mockToast = jest.fn();
-jest.mock('@/hooks/use-toast', () => ({
+const mockToast = vi.fn();
+vi.mock('@/hooks/use-toast', () => ({
   toast: mockToast,
 }));
 
