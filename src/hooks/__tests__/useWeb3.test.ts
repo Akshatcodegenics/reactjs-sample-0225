@@ -11,8 +11,9 @@ jest.mock('ethers', () => ({
 }));
 
 // Mock toast
+const mockToast = jest.fn();
 jest.mock('@/hooks/use-toast', () => ({
-  toast: jest.fn(),
+  toast: mockToast,
 }));
 
 describe('useWeb3', () => {
@@ -23,6 +24,7 @@ describe('useWeb3', () => {
         request: jest.fn(),
       },
     };
+    mockToast.mockClear();
   });
 
   test('initializes with disconnected state', () => {
@@ -35,7 +37,7 @@ describe('useWeb3', () => {
 
   test('connects wallet successfully', async () => {
     const mockAccounts = ['0x1234567890abcdef1234567890abcdef12345678'];
-    window.ethereum.request.mockResolvedValue(mockAccounts);
+    (window.ethereum.request as jest.Mock).mockResolvedValue(mockAccounts);
     
     const { result } = renderHook(() => useWeb3());
     

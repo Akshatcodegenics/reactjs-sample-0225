@@ -6,8 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import Board from '@/pages/Board';
 
 // Mock the toast hook
+const mockToast = jest.fn();
 jest.mock('@/hooks/use-toast', () => ({
-  toast: jest.fn(),
+  toast: mockToast,
 }));
 
 const createWrapper = () => {
@@ -30,6 +31,7 @@ const createWrapper = () => {
 describe('TaskBoard', () => {
   beforeEach(() => {
     localStorage.clear();
+    mockToast.mockClear();
   });
 
   test('renders task board with columns', () => {
