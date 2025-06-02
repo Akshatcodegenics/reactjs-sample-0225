@@ -19,11 +19,12 @@ jest.mock('@/hooks/use-toast', () => ({
 describe('useWeb3', () => {
   beforeEach(() => {
     // Mock window.ethereum
-    (global as any).window = {
-      ethereum: {
+    Object.defineProperty(window, 'ethereum', {
+      writable: true,
+      value: {
         request: jest.fn(),
       },
-    };
+    });
     mockToast.mockClear();
   });
 
@@ -37,7 +38,8 @@ describe('useWeb3', () => {
 
   test('connects wallet successfully', async () => {
     const mockAccounts = ['0x1234567890abcdef1234567890abcdef12345678'];
-    ((window as any).ethereum.request as jest.Mock).mockResolvedValue(mockAccounts);
+    const mockRequest = window.ethereum!.request as jest.Mock;
+    mockRequest.mockResolvedValue(mockAccounts);
     
     const { result } = renderHook(() => useWeb3());
     

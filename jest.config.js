@@ -21,7 +21,11 @@ module.exports = {
     'ts-jest': {
       tsconfig: {
         jsx: 'react-jsx',
+        types: ['jest', 'node', '@testing-library/jest-dom']
       },
     },
+  },
+  testEnvironmentOptions: {
+    customExportConditions: [''],
   },
 };
