@@ -37,7 +37,7 @@ describe('useWeb3', () => {
 
   test('connects wallet successfully', async () => {
     const mockAccounts = ['0x1234567890abcdef1234567890abcdef12345678'];
-    (window.ethereum.request as jest.Mock).mockResolvedValue(mockAccounts);
+    ((window as any).ethereum.request as jest.Mock).mockResolvedValue(mockAccounts);
     
     const { result } = renderHook(() => useWeb3());
     
