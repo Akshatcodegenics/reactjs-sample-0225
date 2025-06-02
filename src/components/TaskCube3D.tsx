@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Box } from '@react-three/drei';
-import { Mesh } from 'three';
+import * as THREE from 'three';
 
 interface TaskCube3DProps {
   priority: 'low' | 'medium' | 'high';
@@ -10,7 +10,7 @@ interface TaskCube3DProps {
 }
 
 const TaskCube3D = ({ priority, position }: TaskCube3DProps) => {
-  const meshRef = useRef<Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -31,7 +31,7 @@ const TaskCube3D = ({ priority, position }: TaskCube3DProps) => {
 
   return (
     <Box ref={meshRef} position={position} args={[0.5, 0.5, 0.5]}>
-      <meshStandardMaterial color={getColor()} />
+      <meshStandardMaterial attach="material" color={getColor()} />
     </Box>
   );
 };
